@@ -40,4 +40,3 @@ aws cloudformation deploy \
     --s3-prefix $FUNCTION_NAME-$ENV \
     --stack-name $FUNCTION_NAME-$ENV \
     --template-file dist/template.yaml
-echo "End."
