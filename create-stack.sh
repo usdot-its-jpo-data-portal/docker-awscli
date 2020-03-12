@@ -36,7 +36,3 @@ aws cloudformation deploy \
     --s3-prefix $FUNCTION_NAME \
     --stack-name $FUNCTION_NAME \
     --template-file dist/template.yaml
-echo "Verifying stack creation complete..."
-aws cloudformation wait stack-create-complete \
-    --stack-name $FUNCTION_NAME --region $REGION
-echo "End."

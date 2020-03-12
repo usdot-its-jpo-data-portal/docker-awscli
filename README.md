@@ -1,3 +1,3 @@
-# docker-awscli
+# docker-awscli ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiR2tlRFgzVHNyRUF4b1NiRXZkYUJFalBrWWNjdTRwdTllYytaSFg2ZEtSdS8yd0tVZmZzWkFhUjJkeGhybk5NUE81YkJIc1BycjZmTWFwQ0hyRXl6cUJzPSIsIml2UGFyYW1ldGVyU3BlYyI6IjI3VUJNN2JwQ3EycEI3emUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 A prepackaged AWS CLI Docker image used for deploying AWS Lambda functions using SAM.
