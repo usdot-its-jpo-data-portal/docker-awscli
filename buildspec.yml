@@ -6,6 +6,8 @@ phases:
       docker: 18
   pre_build:
     commands:
+      - curl -fsSL https://raw.githubusercontent.com/usdot-jpo-codehub/aws-codebuild-extras/master/install >> extras.sh
+      - . ./extras.sh
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - CODEBUILD_RESOLVED_SOURCE_VERSION="${CODEBUILD_RESOLVED_SOURCE_VERSION:-$IMAGE_TAG}"
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -13,8 +15,10 @@ phases:
   build:
     commands:
       - docker build -t $IMAGE_URI:$IMAGE_TAG .
-  post_build:
-    commands:
-      - docker push "$IMAGE_URI:$IMAGE_TAG";
-      - docker tag "$IMAGE_URI:$IMAGE_TAG" "$IMAGE_URI:latest"
-      - docker push "$IMAGE_URI:latest";
+      - |
+        if [ "$CODEBUILD_GIT_BRANCH" = "master" ]; then
+          docker push "$IMAGE_URI:$IMAGE_TAG";
+          docker tag "$IMAGE_URI:$IMAGE_TAG" "$IMAGE_URI:latest"
+          docker push "$IMAGE_URI:latest";
+          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment;
+        fi

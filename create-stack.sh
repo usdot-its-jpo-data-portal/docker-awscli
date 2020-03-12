@@ -7,10 +7,6 @@ if [ -z "$FUNCTION_NAME" ]; then
     echo "Error: Required environment variable FUNCTION_NAME not set."
     exit 1
 fi
-if [ -z "$ENV" ]; then
-    echo "Error: Required environment variable ENV not set."
-    exit 1
-fi
 if [ -z "$REGION" ]; then
     echo "Error: Required environment variable REGION not set."
     exit 1
@@ -29,7 +25,7 @@ aws cloudformation package \
     --template-file $TEMPLATE_FILEPATH \
     --output-template-file dist/template.yaml \
     --s3-bucket $BUCKET \
-    --s3-prefix $FUNCTION_NAME-$ENV \
+    --s3-prefix $FUNCTION_NAME \
     --region $REGION
 echo "Deploying function..."
 aws cloudformation deploy \
@@ -37,6 +33,6 @@ aws cloudformation deploy \
     --no-fail-on-empty-changeset \
     --region $REGION \
     --s3-bucket $BUCKET \
-    --s3-prefix $FUNCTION_NAME-$ENV \
-    --stack-name $FUNCTION_NAME-$ENV \
+    --s3-prefix $FUNCTION_NAME \
+    --stack-name $FUNCTION_NAME \
     --template-file dist/template.yaml
